@@ -16,6 +16,9 @@ if not "%venv_path%"=="" (
     echo No virtual environment specified. Using system Python.
 )
 
+:: Install required packages if they are missing
+pip install -r requirements.txt
+
 :: Pull updates and handle local changes
 :pull
 set "cmdOutput=cmd_output.txt"
@@ -28,14 +31,8 @@ findstr /C:"error: Your local changes to the following files would be overwritte
     git pull
 )
 
-findstr /C:"Already up to date." "%cmdOutput%" > nul || goto rebuild
-
+:: Start ComfyUI
 del "%cmdOutput%"
-
-echo No changes detected. Starting ComfyUI
-pip install -r requirements.txt
-
 echo Opening localhost:%port% in your default browser...
 start http://localhost:%port%
-
 python main.py
