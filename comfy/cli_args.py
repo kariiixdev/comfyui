@@ -179,6 +179,8 @@ parser.add_argument(
 
 parser.add_argument("--user-directory", type=is_valid_directory, default=None, help="Set the ComfyUI user directory with an absolute path. Overrides --base-directory.")
 
+parser.add_argument("--enable-compress-response-body", action="store_true", help="Enable compressing response body.")
+
 if comfy.options.args_parsing:
     args = parser.parse_args()
 else:
@@ -189,3 +191,6 @@ if args.windows_standalone_build:
 
 if args.disable_auto_launch:
     args.auto_launch = False
+
+if args.force_fp16:
+    args.fp16_unet = True
